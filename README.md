@@ -23,8 +23,10 @@
 
 ## 🌍 About The Project
 
-**Humans TV** is a single-page web application that brings global television to your screen. It aggregates thousands of public live TV streams into a beautiful, modern, and user-friendly interface.
+**[Still in Beta Version.Try it and give suggestions to improve]**
 
+**Humans TV** is a single-page web application that brings global television to your screen. It aggregates thousands of public live TV streams into a beautiful, modern, and user-friendly interface.
+**Still in Beta Version.Try it and give suggestions to improve**
 Built with a "Human First" approach, it requires **no registration, no subscription, and no backend**. It runs entirely in the browser using public APIs.
 
 ### Key Features
