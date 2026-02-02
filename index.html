@@ -1,0 +1,2181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Humans TV | Global Live Television</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Core Engine -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.4.0/dist/hls.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --accent: #ec4899;
+            --accent-2: #8b5cf6;
+            --bg-dark: #0a0a0f;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.6);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --glass: rgba(255, 255, 255, 0.05);
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            --error: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+            filter: blur(60px);
+            animation: ambientMove 20s ease-in-out infinite;
+        }
+
+        @keyframes ambientMove {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Navigation */
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 40px;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo-brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            text-decoration: none;
+            position: relative;
+            padding: 8px 24px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .logo-brand:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(59, 130, 246, 0.2));
+            border-color: rgba(16, 185, 129, 0.4);
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.2);
+        }
+
+        .logo-brand i {
+            font-size: 36px;
+            background: linear-gradient(135deg, #10b981, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .logo-text {
+            background: linear-gradient(135deg, #10b981 0%, #3b82f6 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientShift 5s ease infinite;
+            letter-spacing: -1px;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Landing Page */
+        .landing-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 40px 80px;
+            position: relative;
+        }
+
+        .landing-container {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #10b981;
+            margin-bottom: 30px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .main-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(48px, 8vw, 80px);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.7) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -2px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #10b981, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 50px;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        /* Dual Search Container */
+        .dual-search-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto 60px;
+            position: relative;
+        }
+
+        .search-box-wrapper {
+            text-align: left;
+        }
+
+        .search-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .search-wrapper {
+            position: relative;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 8px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .search-wrapper:focus-within {
+            border-color: rgba(16, 185, 129, 0.5);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1), var(--shadow);
+            transform: translateY(-2px);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 18px 50px 18px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 18px;
+            pointer-events: none;
+        }
+
+        /* Dropdown */
+        .dropdown-list {
+            position: absolute;
+            top: calc(100% + 12px);
+            left: 0;
+            right: 0;
+            background: rgba(20, 20, 28, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            z-index: 100;
+            display: none;
+            padding: 8px;
+        }
+
+        .dropdown-list.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-item {
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 12px;
+            color: var(--text-secondary);
+        }
+
+        .dropdown-item:hover {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .dropdown-flag, .category-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+        }
+
+        .dropdown-name {
+            flex: 1;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .dropdown-count {
+            font-size: 12px;
+            color: var(--text-secondary);
+            background: rgba(255,255,255,0.05);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        /* Stats */
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin: 60px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #10b981, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* Trending Section */
+        .trending-section {
+            margin: 60px 0;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #fff, rgba(255,255,255,0.7));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .section-title::before, .section-title::after {
+            content: '';
+            width: 30px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #10b981);
+        }
+
+        .section-title::after {
+            background: linear-gradient(90deg, #3b82f6, transparent);
+        }
+
+        .trending-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .trending-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .trending-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(16, 185, 129, 0.3);
+            background: rgba(255,255,255,0.06);
+        }
+
+        .trending-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        /* Popular Categories Grid - Clean Design */
+        .popular-channels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .popular-category-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 140px;
+        }
+
+        .popular-category-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(16, 185, 129, 0.5);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .popular-cat-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .popular-cat-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, rgba(255,255,255,0.8));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.3;
+            word-wrap: break-word;
+            max-width: 100%;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            margin: 60px auto 0;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(59, 130, 246, 0.2));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 16px;
+        }
+
+        .feature-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 80px;
+            padding: 40px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-top: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #10b981, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-brand i {
+            font-size: 28px;
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 600px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .footer-btn:hover {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .footer-btn.primary {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(59, 130, 246, 0.2));
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .footer-btn.primary:hover {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(59, 130, 246, 0.3));
+        }
+
+        .footer-divider {
+            width: 100%;
+            height: 1px;
+            background: var(--border);
+            max-width: 200px;
+        }
+
+        .footer-copy {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Player View */
+        .player-view {
+            display: none;
+            height: 100vh;
+            background: var(--bg-dark);
+        }
+
+        .player-view.active {
+            display: flex;
+        }
+
+        .channels-sidebar {
+            width: 380px;
+            background: rgba(15, 15, 20, 0.95);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(20px);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(-2px);
+        }
+
+        .country-info, .category-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .category-icon-large {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(59, 130, 246, 0.2));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .country-flag-large {
+            width: 44px;
+            height: 33px;
+            object-fit: cover;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .sidebar-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .sidebar-subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .channel-search-box {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .channel-search-box:focus {
+            border-color: #10b981;
+        }
+
+        .channels-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .channel-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid transparent;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .channel-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #10b981, #3b82f6);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .channel-item:hover {
+            background: rgba(255,255,255,0.06);
+            transform: translateX(4px);
+        }
+
+        .channel-item.active {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .channel-item.active::before {
+            opacity: 1;
+        }
+
+        .channel-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(59, 130, 246, 0.2));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .channel-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .channel-name-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .channel-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .live-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        /* Player Content */
+        .player-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #000;
+            position: relative;
+        }
+
+        .player-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 24px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            pointer-events: none;
+        }
+
+        .now-playing-info {
+            pointer-events: auto;
+        }
+
+        .now-playing {
+            font-size: 11px;
+            font-weight: 600;
+            color: #10b981;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .current-channel {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Stream Error Message Styling */
+        .stream-error-msg {
+            color: #ef4444;
+            font-size: 14px;
+            font-weight: 600;
+            background: rgba(239, 68, 68, 0.1);
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            animation: slideIn 0.3s ease;
+            display: none;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .player-controls-top {
+            display: flex;
+            gap: 12px;
+            pointer-events: auto;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.05);
+        }
+
+        .video-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .plyr {
+            width: 100%;
+            height: 100%;
+            --plyr-color-main: #10b981;
+            --plyr-video-background: #000;
+            --plyr-menu-background: rgba(20, 20, 28, 0.95);
+            --plyr-menu-color: #fff;
+        }
+
+        .plyr__control--overlaid {
+            background: #10b981 !important;
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+        }
+
+        #player {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .player-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            background: radial-gradient(circle at center, rgba(16, 185, 129, 0.1), transparent 70%);
+            z-index: 5;
+            transition: opacity 0.5s;
+        }
+
+        .player-placeholder.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .placeholder-animation {
+            width: 120px;
+            height: 120px;
+            position: relative;
+        }
+
+        .pulse-ring {
+            position: absolute;
+            inset: 0;
+            border: 2px solid #10b981;
+            border-radius: 50%;
+            opacity: 0;
+            animation: pulseRing 2s ease-out infinite;
+        }
+
+        .pulse-ring:nth-child(2) { animation-delay: 0.5s; }
+        .pulse-ring:nth-child(3) { animation-delay: 1s; }
+
+        @keyframes pulseRing {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        .placeholder-icon {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: #10b981;
+        }
+
+        .placeholder-text {
+            font-size: 18px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .toast {
+            position: absolute;
+            top: 100px;
+            right: 24px;
+            background: rgba(20, 20, 28, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            padding: 16px 24px;
+            border-radius: 12px;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .toast.show { 
+            display: flex; 
+            animation: slideIn 0.3s ease; 
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-top-color: #10b981;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin { 
+            to { transform: rotate(360deg); } 
+        }
+
+        .loading-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+            gap: 16px;
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 8px;
+            height: 60px;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        @keyframes loading { 
+            0% { background-position: 200% 0; } 
+            100% { background-position: -200% 0; } 
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #10b981, #3b82f6);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+            z-index: 100;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(4px);
+            z-index: 98;
+        }
+
+        .sidebar-overlay.show { 
+            display: block; 
+        }
+
+        @media (max-width: 968px) {
+            .dual-search-container { grid-template-columns: 1fr; }
+            .channels-sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                height: 100%;
+                z-index: 99;
+                transform: translateX(-100%);
+                transition: transform 0.4s;
+                width: 320px;
+            }
+            .channels-sidebar.open { 
+                transform: translateX(0); 
+            }
+            .mobile-menu-btn { 
+                display: flex; 
+                align-items: center; 
+                justify-content: center; 
+            }
+            .trending-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+            }
+            .popular-channels-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stream-error-msg {
+                font-size: 12px;
+                padding: 4px 10px;
+            }
+            .logo-brand {
+                font-size: 24px;
+                padding: 6px 16px;
+            }
+            .footer-links {
+                flex-direction: column;
+                width: 100%;
+                padding: 0 20px;
+            }
+            .footer-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .landing-page { padding: 100px 20px 60px; }
+            .main-title { font-size: 40px; }
+            .trending-grid { grid-template-columns: 1fr; }
+            .popular-channels-grid {
+                grid-template-columns: 1fr;
+            }
+            .current-channel { font-size: 16px; }
+            .logo-brand {
+                font-size: 20px;
+                gap: 10px;
+            }
+            .logo-brand i {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background -->
+    <div class="ambient-bg"></div>
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <a href="#" class="logo-brand" onclick="goBack()">
+            <i class="fas fa-earth-americas"></i>
+            <span class="logo-text">Humans TV</span>
+        </a>
+    </nav>
+
+    <!-- Landing Page -->
+    <div class="landing-page" id="landingPage">
+        <div class="landing-container">
+            <div class="badge">
+                <span>Live Broadcasting from Earth</span>
+            </div>
+            
+            <h1 class="main-title">
+                Planet Earth<br>
+                <span class="gradient-text">Humans Television</span>
+            </h1>
+            
+            <p class="subtitle">
+                Access 10,000+ live channels by country or category. 
+                A broadcast collection by humans from everywhere on Earth.
+		Enjoy my curious Aliens and Earthlings
+            </p>
+
+            <!-- Dual Search Section -->
+            <div class="dual-search-container">
+                <!-- Country Search -->
+                <div class="search-box-wrapper">
+                    <div class="search-label">
+                        <i class="fas fa-globe"></i> Browse by Country
+                    </div>
+                    <div class="search-wrapper">
+                        <input 
+                            type="text" 
+                            class="search-input" 
+                            id="countryDropdown"
+                            placeholder="Search countries..."
+                            autocomplete="off"
+                        >
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                    <div class="dropdown-list" id="countryDropdownList"></div>
+                </div>
+
+                <!-- Category Search -->
+                <div class="search-box-wrapper">
+                    <div class="search-label">
+                        <i class="fas fa-layer-group"></i> Browse by Category
+                    </div>
+                    <div class="search-wrapper">
+                        <input 
+                            type="text" 
+                            class="search-input" 
+                            id="categoryDropdown"
+                            placeholder="Search categories..."
+                            autocomplete="off"
+                        >
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                    <div class="dropdown-list" id="categoryDropdownList"></div>
+                </div>
+            </div>
+
+            <!-- Popular Channels Section - Now Before Trending Countries -->
+            <div class="trending-section" id="popularChannelsSection">
+                <h2 class="section-title">Popular Channels</h2>
+                <div class="popular-channels-grid">
+                    <div class="popular-category-card" onclick="loadPopularCategory('movies')">
+                        <div class="popular-cat-icon">🎬</div>
+                        <div class="popular-cat-title">Movies/Series</div>
+                    </div>
+
+                    <div class="popular-category-card" onclick="loadPopularCategory('songs')">
+                        <div class="popular-cat-icon">🎵</div>
+                        <div class="popular-cat-title">Songs</div>
+                    </div>
+
+                    <div class="popular-category-card" onclick="loadPopularCategory('news')">
+                        <div class="popular-cat-icon">📰</div>
+                        <div class="popular-cat-title">News</div>
+                    </div>
+
+                    <div class="popular-category-card" onclick="loadPopularCategory('cartoons')">
+                        <div class="popular-cat-icon">🧸</div>
+                        <div class="popular-cat-title">Cartoons</div>
+                    </div>
+
+                    <div class="popular-category-card" onclick="loadPopularCategory('documentaries')">
+                        <div class="popular-cat-icon">🌍</div>
+                        <div class="popular-cat-title">Geography/<br>Documentaries</div>
+                    </div>
+
+                    <div class="popular-category-card" onclick="loadPopularCategory('sports')">
+                        <div class="popular-cat-icon">⚽</div>
+                        <div class="popular-cat-title">Sports</div>
+                    </div>
+
+                    <div class="popular-category-card" onclick="loadPopularCategory('science')">
+                        <div class="popular-cat-icon">🔬</div>
+                        <div class="popular-cat-title">Science</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trending Countries - Now After Popular Channels -->
+            <div class="trending-section">
+                <h2 class="section-title">Trending Countries</h2>
+                <div class="trending-grid">
+                    <div class="trending-card" onclick="selectTrendingCountry('Pakistan')">
+                        <div class="trending-icon">🇵🇰</div>
+                        <div style="font-weight: 600;">Pakistan</div>
+                    </div>
+                    <div class="trending-card" onclick="selectTrendingCountry('India')">
+                        <div class="trending-icon">🇮🇳</div>
+                        <div style="font-weight: 600;">India</div>
+                    </div>
+                    <div class="trending-card" onclick="selectTrendingCountry('United States')">
+                        <div class="trending-icon">🇺🇸</div>
+                        <div style="font-weight: 600;">United States</div>
+                    </div>
+                    <div class="trending-card" onclick="selectTrendingCountry('United Kingdom')">
+                        <div class="trending-icon">🇬🇧</div>
+                        <div style="font-weight: 600;">United Kingdom</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-value">150+</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">29</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">10K+</div>
+                    <div class="stat-label">Channels</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">24/7</div>
+                    <div class="stat-label">Live</div>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <div class="feature-title">Global Coverage</div>
+                    <div class="feature-desc">Access diverse content from every corner of the world.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Lightning Fast</div>
+                    <div class="feature-desc">Optimized HLS streaming with zero buffering.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <div class="feature-title">Private & Secure</div>
+                    <div class="feature-desc">No registration/login. No Data Collection. No Backend. Frontend Website</div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-brand">
+                        <i class="fas fa-earth-americas"></i>
+                        <span>Humans TV</span>
+                    </div>
+                    
+                    <p class="footer-text">
+                        An open source project dedicated to bringing global television to everyone. 
+                        Built with passion by a human.
+                    </p>
+
+                    <div class="footer-links">
+                        <a href="https://github.com/MutmainX" target="_blank" class="footer-btn">
+                            <i class="fab fa-github"></i>
+                            Developer Profile
+                        </a>
+                        
+                        <a href="https://github.com/MutmainX/HumansTV" target="_blank" class="footer-btn primary">
+                            <i class="fas fa-code-branch"></i>
+                            Open Source Repository
+                        </a>
+                        
+                        <a href="https://forms.gle/g9Hv2AUXvGCxhqQr7" target="_blank" class="footer-btn" style="color: #f59e0b; border-color: rgba(245, 158, 11, 0.3);">
+                            <i class="fas fa-bug"></i>
+                            Report Bug / Feedback
+                        </a>
+                    </div>
+
+                    <div class="footer-divider"></div>
+                    
+                    <p class="footer-copy">
+                        Humans TV. Open Source. 
+                        <br>
+                        <span style="font-size: 12px; opacity: 0.7;">Made with 💚 by humanity</span>
+                    </p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Player View -->
+    <div class="player-view" id="playerView">
+        <aside class="channels-sidebar" id="channelsSidebar">
+            <div class="sidebar-header">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i> Back to Browse
+                </button>
+                
+                <!-- Country Info Template -->
+                <div class="country-info" id="countryInfoTemplate" style="display: none;">
+                    <img id="selectedCountryFlag" class="country-flag-large" src="" alt="">
+                    <div>
+                        <div class="sidebar-title" id="selectedCountryName"></div>
+                        <div class="sidebar-subtitle">Live Channels</div>
+                    </div>
+                </div>
+
+                <!-- Category Info Template -->
+                <div class="category-info" id="categoryInfoTemplate" style="display: none;">
+                    <div class="category-icon-large" id="selectedCategoryIcon"></div>
+                    <div>
+                        <div class="sidebar-title" id="selectedCategoryName"></div>
+                        <div class="sidebar-subtitle" id="selectedCategoryCount">0 Channels</div>
+                    </div>
+                </div>
+
+                <input type="text" class="channel-search-box" id="channelSearchBox" placeholder="Search channels...">
+            </div>
+            <div class="channels-list" id="channelsList">
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <span>Loading channels...</span>
+                </div>
+            </div>
+        </aside>
+
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+        <div class="player-content">
+            <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                <i class="fas fa-list"></i>
+            </button>
+
+            <div class="player-header">
+                <div class="now-playing-info">
+                    <div class="now-playing">Now Playing</div>
+                    <div class="current-channel" id="currentChannel">Select a channel</div>
+                    <div class="stream-error-msg" id="streamErrorMsg">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Sorry, stream is not available. Try other channels..</span>
+                    </div>
+                </div>
+                <div class="player-controls-top">
+                    <!-- Fullscreen button removed per user request -->
+                    <button class="icon-btn" onclick="goBack()" title="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="video-wrapper">
+                <video id="player" controls crossorigin playsinline></video>
+                
+                <div class="player-placeholder" id="playerPlaceholder">
+                    <div class="placeholder-animation">
+                        <div class="pulse-ring"></div>
+                        <div class="pulse-ring"></div>
+                        <div class="pulse-ring"></div>
+                        <div class="placeholder-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="placeholder-text">Select a channel to start watching</div>
+                </div>
+
+                <div class="toast" id="toast">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div class="spinner" id="toastSpinner"></div>
+                        <div>
+                            <div style="font-weight: 600;" id="toastTitle">Loading</div>
+                            <div style="font-size: 13px; color: var(--text-secondary);" id="toastMsg">Connecting...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            countriesUrl: 'https://iptv-org.github.io/api/countries.json',
+            playlistBase: 'https://iptv-org.github.io/iptv/countries/',
+            categoryBase: 'https://iptv-org.github.io/iptv/categories/',
+            proxyUrl: 'https://corsproxy.io/?'
+        };
+
+        // Categories Data (XXX removed)
+        const CATEGORIES = [
+            { name: 'Animation', count: 64, icon: '🎨', url: 'animation.m3u' },
+            { name: 'Auto', count: 19, icon: '🚗', url: 'auto.m3u' },
+            { name: 'Business', count: 74, icon: '💼', url: 'business.m3u' },
+            { name: 'Classic', count: 51, icon: '🎭', url: 'classic.m3u' },
+            { name: 'Comedy', count: 82, icon: '😂', url: 'comedy.m3u' },
+            { name: 'Cooking', count: 32, icon: '🍳', url: 'cooking.m3u' },
+            { name: 'Culture', count: 170, icon: '🎪', url: 'culture.m3u' },
+            { name: 'Documentary', count: 124, icon: '📺', url: 'documentary.m3u' },
+            { name: 'Education', count: 185, icon: '📚', url: 'education.m3u' },
+            { name: 'Entertainment', count: 656, icon: '🎪', url: 'entertainment.m3u' },
+            { name: 'Family', count: 54, icon: '👨‍👩‍👧‍👦', url: 'family.m3u' },
+            { name: 'General', count: 2468, icon: '📡', url: 'general.m3u' },
+            { name: 'Interactive', count: 1, icon: '🎮', url: 'interactive.m3u' },
+            { name: 'Kids', count: 259, icon: '🧸', url: 'kids.m3u' },
+            { name: 'Legislative', count: 186, icon: '⚖️', url: 'legislative.m3u' },
+            { name: 'Lifestyle', count: 100, icon: '✨', url: 'lifestyle.m3u' },
+            { name: 'Movies', count: 412, icon: '🎬', url: 'movies.m3u' },
+            { name: 'Music', count: 647, icon: '🎵', url: 'music.m3u' },
+            { name: 'News', count: 934, icon: '📰', url: 'news.m3u' },
+            { name: 'Outdoor', count: 46, icon: '🏕️', url: 'outdoor.m3u' },
+            { name: 'Public', count: 43, icon: '🌐', url: 'public.m3u' },
+            { name: 'Relax', count: 4, icon: '🧘', url: 'relax.m3u' },
+            { name: 'Religious', count: 739, icon: '⛪', url: 'religious.m3u' },
+            { name: 'Science', count: 24, icon: '🔬', url: 'science.m3u' },
+            { name: 'Series', count: 222, icon: '📺', url: 'series.m3u' },
+            { name: 'Shop', count: 84, icon: '🛍️', url: 'shop.m3u' },
+            { name: 'Sports', count: 318, icon: '⚽', url: 'sports.m3u' },
+            { name: 'Travel', count: 43, icon: '✈️', url: 'travel.m3u' },
+            { name: 'Weather', count: 16, icon: '🌤️', url: 'weather.m3u' },
+            { name: 'Undefined', count: 3250, icon: '❓', url: 'undefined.m3u' }
+        ];
+
+        // Popular Channels Configuration
+        const POPULAR_CHANNELS = {
+            movies: {
+                name: 'Movies/Series',
+                icon: '🎬',
+                sources: [
+                    { type: 'country', code: 'US', names: ['Dark Matter TV', 'Syfy East', 'Cinelife', 'BBC America', 'Sundance TV', 'Bounce Movies', 'We TV', 'MTV East', 'Comedy TV', 'Cold Case Files', 'Haunt TV', 'Crime + Investigation'] },
+                    { type: 'category', url: 'series.m3u', names: ['Serie Max'] },
+                    { type: 'country', code: 'IN', names: ['Shemaroo Josh', 'Zee Cinema', 'PTC Punjabi', 'Showbox', 'Pasand TV', 'MH One Dil Se', 'Ishara TV', 'Nazara'] }
+                ]
+            },
+            sports: {
+                name: 'Sports',
+                icon: '⚽',
+                sources: [
+                    { type: 'category', url: 'sports.m3u', names: ['MMA-TV.com', 'Game+', 'FIFA+'] }
+                ]
+            },
+            news: {
+                name: 'News',
+                icon: '📰',
+                sources: [
+                    { type: 'category', url: 'news.m3u', names: ['Al Jazeera English', 'RT News', 'TRT World'] }
+                ]
+            },
+            science: {
+                name: 'Science',
+                icon: '🔬',
+                sources: [
+                    { type: 'category', url: 'science.m3u', names: ['InWonder', 'ILM Va Tabiat'] }
+                ]
+            },
+            documentaries: {
+                name: 'Geography/Documentaries',
+                icon: '🌍',
+                sources: [
+                    { type: 'category', url: 'documentary.m3u', names: ['BBC Earth', 'National Geographic', 'Crime 360', 'History', 'Law & Crime'] },
+                    { type: 'country', code: 'IN', names: ['The Pet Collective', 'Weatherspy', 'Travelxp', 'Epic TV'] }
+                ]
+            },
+            cartoons: {
+                name: 'Cartoons',
+                icon: '🧸',
+                sources: [
+                    { type: 'category', url: 'kids.m3u', names: ['Tom and Jerry', 'Toon Goggles', 'Ani', 'Nick Jr. East', 'Disney Jr.'] },
+                    { type: 'category', url: 'animation.m3u', names: ['BBC Three', 'CBBC', 'Anime'] }
+                ],
+                sortOrder: ['Tom and Jerry', 'BBC Three', 'CBBC', 'Anime', 'Toon Goggles', 'Ani', 'Nick Jr. East', 'Disney Jr.']
+            },
+            songs: {
+                name: 'Songs',
+                icon: '🎵',
+                sources: [
+                    { type: 'category', url: 'music.m3u', names: ['Vevo 2K', 'Vevo Pop', 'BRIDGE', 'Bridge Hits', '7 YOU & ME', '98.1 Pearl FM', '51 Radio TV', 'AE Radio TV', '8XM', '9XM', 'YRF Music', '9X Tashan', '9X Jhakaas', 'B4U Music', 'MH One Music', 'PTC Music', 'Zee Music', 'Zoom Music', 'Antenne Steiermark', 'Baraza TV Relaxing'] }
+                ]
+            }
+        };
+
+        // State
+        const state = {
+            countries: [],
+            channels: [],
+            currentMode: null,
+            currentCountry: null,
+            currentCategory: null,
+            hls: null,
+            isRetrying: false,
+            sidebarOpen: false,
+            toastTimeout: null
+        };
+
+        // Elements
+        const els = {
+            landingPage: document.getElementById('landingPage'),
+            playerView: document.getElementById('playerView'),
+            countryDropdown: document.getElementById('countryDropdown'),
+            countryDropdownList: document.getElementById('countryDropdownList'),
+            categoryDropdown: document.getElementById('categoryDropdown'),
+            categoryDropdownList: document.getElementById('categoryDropdownList'),
+            channelsList: document.getElementById('channelsList'),
+            countryInfoTemplate: document.getElementById('countryInfoTemplate'),
+            categoryInfoTemplate: document.getElementById('categoryInfoTemplate'),
+            selectedCountryFlag: document.getElementById('selectedCountryFlag'),
+            selectedCountryName: document.getElementById('selectedCountryName'),
+            selectedCategoryIcon: document.getElementById('selectedCategoryIcon'),
+            selectedCategoryName: document.getElementById('selectedCategoryName'),
+            selectedCategoryCount: document.getElementById('selectedCategoryCount'),
+            currentChannel: document.getElementById('currentChannel'),
+            channelSearchBox: document.getElementById('channelSearchBox'),
+            channelsSidebar: document.getElementById('channelsSidebar'),
+            sidebarOverlay: document.getElementById('sidebarOverlay'),
+            toast: document.getElementById('toast'),
+            toastMsg: document.getElementById('toastMsg'),
+            toastTitle: document.getElementById('toastTitle'),
+            playerPlaceholder: document.getElementById('playerPlaceholder'),
+            streamErrorMsg: document.getElementById('streamErrorMsg')
+        };
+
+        // Initialize Plyr
+        const player = new Plyr('#player', {
+            controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
+            autoplay: true,
+            ads: { enabled: false }
+        });
+
+        // Initialize
+        async function init() {
+            try {
+                const res = await fetch(CONFIG.countriesUrl);
+                const data = await res.json();
+                state.countries = data
+                    .filter(c => c.languages && c.languages.length > 0)
+                    .sort((a, b) => a.name.localeCompare(b.name));
+            } catch (err) {
+                console.error('Failed to load countries:', err);
+            }
+        }
+
+        // Country Dropdown Logic
+        els.countryDropdown.addEventListener('focus', () => {
+            renderCountryDropdown('');
+            els.countryDropdownList.classList.add('show');
+        });
+
+        els.countryDropdown.addEventListener('input', (e) => {
+            renderCountryDropdown(e.target.value.toLowerCase());
+        });
+
+        els.countryDropdown.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const filtered = state.countries.filter(c => 
+                    c.name.toLowerCase().includes(e.target.value.toLowerCase())
+                );
+                if (filtered.length === 1) selectCountry(filtered[0]);
+            }
+        });
+
+        // Category Dropdown Logic
+        els.categoryDropdown.addEventListener('focus', () => {
+            renderCategoryDropdown('');
+            els.categoryDropdownList.classList.add('show');
+        });
+
+        els.categoryDropdown.addEventListener('input', (e) => {
+            renderCategoryDropdown(e.target.value.toLowerCase());
+        });
+
+        els.categoryDropdown.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const filtered = CATEGORIES.filter(c => 
+                    c.name.toLowerCase().includes(e.target.value.toLowerCase())
+                );
+                if (filtered.length === 1) selectCategory(filtered[0]);
+            }
+        });
+
+        // Close dropdowns on outside click
+        document.addEventListener('click', (e) => {
+            if (!els.countryDropdown.contains(e.target) && !els.countryDropdownList.contains(e.target)) {
+                els.countryDropdownList.classList.remove('show');
+            }
+            if (!els.categoryDropdown.contains(e.target) && !els.categoryDropdownList.contains(e.target)) {
+                els.categoryDropdownList.classList.remove('show');
+            }
+        });
+
+        // Render Country Dropdown
+        function renderCountryDropdown(searchTerm) {
+            const filtered = searchTerm 
+                ? state.countries.filter(c => c.name.toLowerCase().includes(searchTerm))
+                : state.countries;
+
+            els.countryDropdownList.innerHTML = filtered.map(country => `
+                <div class="dropdown-item" onclick="selectCountryByCode('${country.code}')">
+                    <img src="https://flagcdn.com/w40/${country.code.toLowerCase()}.png" class="dropdown-flag" alt="${country.name}">
+                    <span class="dropdown-name">${country.name}</span>
+                    <span class="dropdown-code">${country.code}</span>
+                </div>
+            `).join('');
+        }
+
+        // Render Category Dropdown
+        function renderCategoryDropdown(searchTerm) {
+            const filtered = searchTerm 
+                ? CATEGORIES.filter(c => c.name.toLowerCase().includes(searchTerm))
+                : CATEGORIES;
+
+            els.categoryDropdownList.innerHTML = filtered.map(cat => `
+                <div class="dropdown-item" onclick="selectCategoryByName('${cat.name}')">
+                    <div class="category-icon">${cat.icon}</div>
+                    <span class="dropdown-name">${cat.name}</span>
+                    <span class="dropdown-count">${cat.count}</span>
+                </div>
+            `).join('');
+        }
+
+        // Select Country Helper
+        function selectCountryByCode(code) {
+            const country = state.countries.find(c => c.code === code);
+            if (country) selectCountry(country);
+        }
+
+        // Select Country
+        async function selectCountry(country) {
+            state.currentMode = 'country';
+            state.currentCountry = country;
+            els.countryDropdown.value = country.name;
+            els.countryDropdownList.classList.remove('show');
+            els.categoryDropdownList.classList.remove('show');
+
+            showPlayerView();
+            
+            els.countryInfoTemplate.style.display = 'flex';
+            els.categoryInfoTemplate.style.display = 'none';
+            els.selectedCountryFlag.src = `https://flagcdn.com/w80/${country.code.toLowerCase()}.png`;
+            els.selectedCountryName.textContent = country.name;
+
+            els.channelsList.innerHTML = Array(5).fill(0).map(() => '<div class="skeleton"></div>').join('');
+
+            try {
+                const res = await fetch(`${CONFIG.playlistBase}${country.code.toLowerCase()}.m3u`);
+                if (!res.ok) throw new Error('Failed');
+                const text = await res.text();
+                parseM3U(text);
+            } catch (e) {
+                els.channelsList.innerHTML = '<div class="loading-state"><span>No channels available</span></div>';
+            }
+        }
+
+        // Select Category
+        async function selectCategory(category) {
+            state.currentMode = 'category';
+            state.currentCategory = category;
+            els.categoryDropdown.value = category.name;
+            els.categoryDropdownList.classList.remove('show');
+            els.countryDropdownList.classList.remove('show');
+
+            showPlayerView();
+
+            els.countryInfoTemplate.style.display = 'none';
+            els.categoryInfoTemplate.style.display = 'flex';
+            els.selectedCategoryIcon.textContent = category.icon;
+            els.selectedCategoryName.textContent = category.name;
+            els.selectedCategoryCount.textContent = `${category.count} Channels`;
+
+            els.channelsList.innerHTML = Array(5).fill(0).map(() => '<div class="skeleton"></div>').join('');
+
+            try {
+                const res = await fetch(`${CONFIG.categoryBase}${category.url}`);
+                if (!res.ok) throw new Error('Failed');
+                const text = await res.text();
+                parseM3U(text);
+            } catch (e) {
+                els.channelsList.innerHTML = '<div class="loading-state"><span>No channels available</span></div>';
+            }
+        }
+
+        // Load Popular Category with curated channels
+        async function loadPopularCategory(categoryKey) {
+            const config = POPULAR_CHANNELS[categoryKey];
+            if (!config) return;
+
+            state.currentMode = 'popular';
+            state.currentCategory = { name: config.name, icon: config.icon };
+
+            showPlayerView();
+
+            els.countryInfoTemplate.style.display = 'none';
+            els.categoryInfoTemplate.style.display = 'flex';
+            els.selectedCategoryIcon.textContent = config.icon;
+            els.selectedCategoryName.textContent = config.name;
+            els.selectedCategoryCount.textContent = `Curated Channels`;
+
+            els.channelsList.innerHTML = Array(5).fill(0).map(() => '<div class="skeleton"></div>').join('');
+
+            try {
+                const allChannels = [];
+                
+                // Fetch from all sources
+                for (const source of config.sources) {
+                    let url;
+                    if (source.type === 'country') {
+                        url = `${CONFIG.playlistBase}${source.code.toLowerCase()}.m3u`;
+                    } else {
+                        url = `${CONFIG.categoryBase}${source.url}`;
+                    }
+
+                    try {
+                        const res = await fetch(url);
+                        if (res.ok) {
+                            const text = await res.text();
+                            const channels = parseM3UToArray(text);
+                            
+                            // Filter for specific names (fuzzy match)
+                            const filtered = channels.filter(ch => {
+                                const chNameLower = ch.name.toLowerCase();
+                                return source.names.some(name => {
+                                    const nameLower = name.toLowerCase();
+                                    // Check if channel name contains the search name or vice versa
+                                    return chNameLower.includes(nameLower) || 
+                                           nameLower.includes(chNameLower) ||
+                                           // Special cases for partial matches
+                                           (nameLower === 'bbc three' && chNameLower.includes('bbc three')) ||
+                                           (nameLower === 'cbbc' && chNameLower.includes('cbbc')) ||
+                                           (nameLower === 'serie max' && chNameLower.includes('serie max')) ||
+                                           (nameLower === 'crime + investigation' && (chNameLower.includes('crime') && chNameLower.includes('investigation'))) ||
+                                           (nameLower === 'ani' && chNameLower === 'ani') ||
+                                           (nameLower === '9xm' && chNameLower.includes('9xm')) ||
+                                           (nameLower === '8xm' && chNameLower.includes('8xm'));
+                                });
+                            });
+
+                            // Tag channels with their intended sort name for proper ordering
+                            filtered.forEach(ch => {
+                                const match = source.names.find(name => {
+                                    const nameLower = name.toLowerCase();
+                                    const chNameLower = ch.name.toLowerCase();
+                                    return chNameLower.includes(nameLower) || 
+                                           nameLower.includes(chNameLower) ||
+                                           (nameLower === 'bbc three' && chNameLower.includes('bbc three')) ||
+                                           (nameLower === 'cbbc' && chNameLower.includes('cbbc')) ||
+                                           (nameLower === 'crime + investigation' && (chNameLower.includes('crime') && chNameLower.includes('investigation')));
+                                });
+                                if (match) ch.sortKey = match;
+                            });
+
+                            allChannels.push(...filtered);
+                        }
+                    } catch (e) {
+                        console.warn(`Failed to load ${url}:`, e);
+                    }
+                }
+
+                // Remove duplicates based on URL
+                const uniqueChannels = [];
+                const seenUrls = new Set();
+                allChannels.forEach(ch => {
+                    if (!seenUrls.has(ch.url)) {
+                        seenUrls.add(ch.url);
+                        uniqueChannels.push(ch);
+                    }
+                });
+
+                // Sort according to specified order if available
+                if (config.sortOrder) {
+                    uniqueChannels.sort((a, b) => {
+                        const idxA = config.sortOrder.findIndex(name => 
+                            a.name.toLowerCase().includes(name.toLowerCase()) ||
+                            name.toLowerCase().includes(a.name.toLowerCase())
+                        );
+                        const idxB = config.sortOrder.findIndex(name => 
+                            b.name.toLowerCase().includes(name.toLowerCase()) ||
+                            name.toLowerCase().includes(b.name.toLowerCase())
+                        );
+                        if (idxA === -1) return 1;
+                        if (idxB === -1) return -1;
+                        return idxA - idxB;
+                    });
+                } else {
+                    // Default sort: try to match the order in sources
+                    const sourceOrder = [];
+                    config.sources.forEach(s => sourceOrder.push(...s.names));
+                    uniqueChannels.sort((a, b) => {
+                        const idxA = sourceOrder.findIndex(name => 
+                            a.name.toLowerCase().includes(name.toLowerCase())
+                        );
+                        const idxB = sourceOrder.findIndex(name => 
+                            b.name.toLowerCase().includes(name.toLowerCase())
+                        );
+                        if (idxA === -1) return 1;
+                        if (idxB === -1) return -1;
+                        return idxA - idxB;
+                    });
+                }
+
+                state.channels = uniqueChannels;
+                renderChannels(uniqueChannels);
+
+                if (uniqueChannels.length > 0) {
+                    setTimeout(() => {
+                        const first = els.channelsList.firstElementChild;
+                        if (first) playChannelByIndex(0, first);
+                    }, 500);
+                } else {
+                    els.channelsList.innerHTML = '<div class="loading-state"><span>No channels available in this category</span></div>';
+                }
+
+            } catch (e) {
+                console.error('Error loading popular category:', e);
+                els.channelsList.innerHTML = '<div class="loading-state"><span>Failed to load channels</span></div>';
+            }
+        }
+
+        // Helper for trending clicks
+        function selectTrendingCountry(name) {
+            const country = state.countries.find(c => c.name === name);
+            if (country) selectCountry(country);
+        }
+
+        function selectCategoryByName(name) {
+            const cat = CATEGORIES.find(c => c.name === name);
+            if (cat) selectCategory(cat);
+        }
+
+        // Show Player View
+        function showPlayerView() {
+            els.landingPage.style.display = 'none';
+            els.playerView.classList.add('active');
+        }
+
+        // Parse M3U to array (returns channels without setting state)
+        function parseM3UToArray(data) {
+            const lines = data.split('\n');
+            const channels = [];
+            let current = {};
+
+            lines.forEach(line => {
+                line = line.trim();
+                if (line.startsWith('#EXTINF:')) {
+                    const parts = line.split(',');
+                    current = { name: parts[parts.length - 1], url: '' };
+                } else if (line.startsWith('http')) {
+                    current.url = line;
+                    channels.push({...current});
+                    current = {};
+                }
+            });
+
+            return channels;
+        }
+
+        // Parse M3U (original function for normal browsing)
+        function parseM3U(data) {
+            state.channels = parseM3UToArray(data);
+            
+            // Sort: Secure first
+            state.channels.sort((a, b) => {
+                const aS = a.url.startsWith('https');
+                const bS = b.url.startsWith('https');
+                if (aS && !bS) return -1;
+                if (!aS && bS) return 1;
+                return 0;
+            });
+
+            renderChannels(state.channels);
+
+            if (state.channels.length > 0) {
+                setTimeout(() => {
+                    const first = els.channelsList.firstElementChild;
+                    if (first) playChannelByIndex(0, first);
+                }, 500);
+            }
+        }
+
+        // Render Channels
+        function renderChannels(channels) {
+            if (channels.length === 0) {
+                els.channelsList.innerHTML = '<div class="loading-state"><span>No channels found</span></div>';
+                return;
+            }
+
+            els.channelsList.innerHTML = channels.map((ch, idx) => {
+                const isSecure = ch.url.startsWith('https');
+                return `
+                    <div class="channel-item" onclick="playChannelByIndex(${idx}, this)">
+                        <div class="channel-icon">
+                            <i class="fas fa-tv"></i>
+                        </div>
+                        <div class="channel-info">
+                            <div class="channel-name-text">${ch.name}</div>
+                            <div class="channel-meta">
+                                <span class="live-badge">LIVE</span>
+                                <span>${isSecure ? '🔒 Secure' : 'Standard'}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Stream Error Message Helpers
+        function showStreamError() {
+            if (els.streamErrorMsg) {
+                els.streamErrorMsg.style.display = 'flex';
+            }
+        }
+
+        function hideStreamError() {
+            if (els.streamErrorMsg) {
+                els.streamErrorMsg.style.display = 'none';
+            }
+        }
+
+        // Play Channel
+        function playChannelByIndex(index, element) {
+            const channel = state.channels[index];
+            if (!channel) return;
+
+            // Clear any existing error state when switching channels
+            hideStreamError();
+            
+            document.querySelectorAll('.channel-item').forEach(c => c.classList.remove('active'));
+            element.classList.add('active');
+            els.currentChannel.textContent = channel.name;
+            
+            state.isRetrying = false;
+            loadVideo(channel.url, false);
+
+            if (window.innerWidth < 968) toggleSidebar();
+        }
+
+        // Load Video
+        function loadVideo(url, useProxy) {
+            if (state.hls) { state.hls.destroy(); state.hls = null; }
+
+            const finalUrl = useProxy ? CONFIG.proxyUrl + encodeURIComponent(url) : url;
+            showToast(useProxy ? 'Retrying with proxy...' : 'Connecting to stream...', 'Please Wait');
+
+            if (Hls.isSupported()) {
+                const hls = new Hls({
+                    manifestLoadingTimeOut: 10000,
+                    manifestLoadingMaxRetry: 2
+                });
+                state.hls = hls;
+                hls.loadSource(finalUrl);
+                hls.attachMedia(document.getElementById('player'));
+
+                hls.on(Hls.Events.MANIFEST_PARSED, () => {
+                    hideToast();
+                    player.play().catch(() => {});
+                });
+
+                hls.on(Hls.Events.ERROR, (event, data) => {
+                    if (data.fatal && !state.isRetrying && !useProxy) {
+                        state.isRetrying = true;
+                        state.hls.destroy();
+                        setTimeout(() => loadVideo(url, true), 1000);
+                    } else if (data.fatal) {
+                        // Final failure - show toast temporarily
+                        showToast('Stream unavailable', 'Error');
+                        setTimeout(hideToast, 3000);
+                        // Show persistent error next to title (requested feature)
+                        showStreamError();
+                    }
+                });
+            } else {
+                document.getElementById('player').src = finalUrl;
+                player.play().catch(() => {});
+            }
+        }
+
+        // FIX: Set up video event listeners properly
+        const videoEl = document.getElementById('player');
+        
+        // CRITICAL FIX: Hide toast when video actually plays
+        videoEl.addEventListener('playing', () => {
+            els.playerPlaceholder.classList.add('hidden');
+            hideToast(); // This dismisses the buffering notification
+        });
+
+        // Also hide when video is ready to play (backup)
+        videoEl.addEventListener('canplay', () => {
+            hideToast();
+        });
+
+        // Show buffering toast when waiting for data
+        videoEl.addEventListener('waiting', () => {
+            showToast('Buffering...', 'Please Wait');
+        });
+
+        // Handle native video errors for non-HLS browsers
+        videoEl.addEventListener('error', () => {
+            if (!state.hls && videoEl.error) {
+                showStreamError();
+                showToast('Stream unavailable', 'Error');
+                setTimeout(hideToast, 3000);
+            }
+        });
+
+        // Toast functions with timeout management
+        function showToast(msg, title = 'Loading') {
+            // Clear any existing timeout
+            if (state.toastTimeout) {
+                clearTimeout(state.toastTimeout);
+                state.toastTimeout = null;
+            }
+            
+            els.toastTitle.textContent = title;
+            els.toastMsg.textContent = msg;
+            els.toast.classList.add('show');
+        }
+
+        function hideToast() {
+            els.toast.classList.remove('show');
+            if (state.toastTimeout) {
+                clearTimeout(state.toastTimeout);
+                state.toastTimeout = null;
+            }
+        }
+
+        // Navigation
+        function goBack() {
+            els.playerView.classList.remove('active');
+            els.landingPage.style.display = 'flex';
+            els.countryDropdown.value = '';
+            els.categoryDropdown.value = '';
+            els.playerPlaceholder.classList.remove('hidden');
+            hideToast(); // Hide any stuck toast
+            hideStreamError(); // Hide stream error message when going back (requested feature)
+            
+            if (state.hls) { state.hls.destroy(); state.hls = null; }
+            player.stop();
+            videoEl.src = '';
+            
+            state.currentMode = null;
+            state.currentCountry = null;
+            state.currentCategory = null;
+        }
+
+        function toggleSidebar() {
+            state.sidebarOpen = !state.sidebarOpen;
+            els.channelsSidebar.classList.toggle('open', state.sidebarOpen);
+            els.sidebarOverlay.classList.toggle('show', state.sidebarOpen);
+        }
+
+        // Channel Search Filter
+        els.channelSearchBox.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const items = els.channelsList.querySelectorAll('.channel-item');
+            
+            items.forEach((item, idx) => {
+                const ch = state.channels[idx];
+                if (ch && ch.name.toLowerCase().includes(term)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.fullscreenElement) {
+                document.exitFullscreen();
+            }
+        });
+
+        // Init
+        init();
+    </script>
+</body>
+</html>
