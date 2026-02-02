@@ -69,9 +69,15 @@ To run this project locally, you don't need to install any heavy dependencies or
 
 ### Prerequisites
 
-* A modern web browser (Chrome, Firefox, Safari, Edge).
+* Any Web Browser *
 
 ### Installation
+
+** Just download the index.html file and open it in any browser. Everything works perfectly. **
+
+** Cloud Link Coming Soon **
+
+Or 
 
 1.  **Clone the repository**
     ```sh
@@ -80,14 +86,6 @@ To run this project locally, you don't need to install any heavy dependencies or
 2.  **Open the file**
     Simply double-click `index.html` to open it in your browser.
 
-    > **Note:** For the best streaming performance and to avoid CORS (Cross-Origin Resource Sharing) issues with some specific streams, it is recommended to run the file using a local server (like VS Code's "Live Server" extension or Python's `http.server`) rather than the `file://` protocol.
-
-    **Using Python:**
-    ```sh
-    cd HumansTV
-    python -m http.server
-    # Open http://localhost:8000 in your browser
-    ```
 
 ---
 
@@ -98,18 +96,6 @@ This project relies on the incredible work of the open-source community for stre
 * **Country Data:** [iptv-org/api](https://github.com/iptv-org/api)
 
 *Disclaimer: Humans TV does not host any stream content. It acts purely as a frontend interface for publicly available M3U playlists.*
-
----
-
-## 🗺️ Roadmap
-
-- [x] Country & Category Filters
-- [x] Smart Search
-- [x] Mobile Responsive Design
-- [x] Stream Error Handling
-- [ ] Favorites System (Local Storage)
-- [ ] "Recently Watched" list
-- [ ] Dark/Light Mode toggle
 
 ---
 
