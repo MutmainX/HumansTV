@@ -12,9 +12,6 @@
     Access 10,000+ live channels from 150+ countries. Open Source. No Login.
     <br />
     <br />
-    ·
-    <a href="https://github.com/MutmainX/HumansTV/issues">Report Bug</a>
-    ·
     <a href="https://github.com/MutmainX/HumansTV/issues">Request Feature</a>
   </p>
 </div>
@@ -65,6 +62,10 @@ This project is a lightweight, single-file application built with vanilla web te
 
 ## 🚀 Getting Started
 
+## Access it here[https://mutmainx.github.io/HumansTV/]
+
+Or 
+
 To run this project locally, you don't need to install any heavy dependencies or Node.js modules. It is a standalone web page.
 
 ### Prerequisites
@@ -74,8 +75,6 @@ To run this project locally, you don't need to install any heavy dependencies or
 ### Installation
 
 ** Just download the index.html file and open it in any browser. Everything works perfectly. **
-
-** Cloud Link Coming Soon **
 
 Or 
 
