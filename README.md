@@ -40,15 +40,14 @@ Built with a "Human First" approach, it requires **no registration, no subscript
 
 ---
 
-## 📸 Screenshots
+## 📸 Demo Video
 
-<div align="center"> 
-  <img src="https://via.placeholder.com/800x450.png?text=Landing+Page+Preview" alt="Landing Page" style="border-radius: 10px; margin-bottom: 20px;">
-  <br>
-  <img src="https://via.placeholder.com/800x450.png?text=Player+View+Preview" alt="Player View" style="border-radius: 10px;">
-</div>
 
----
+https://github.com/user-attachments/assets/7d5a3af5-3d7a-438f-a3af-3e00b247725b
+
+
+
+
 
 ## 🛠️ Built With
 
