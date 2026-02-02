@@ -12,7 +12,6 @@
     Access 10,000+ live channels from 150+ countries. Open Source. No Login.
     <br />
     <br />
-    <a href="#-live-demo">View Demo</a>
     ·
     <a href="https://github.com/MutmainX/HumansTV/issues">Report Bug</a>
     ·
