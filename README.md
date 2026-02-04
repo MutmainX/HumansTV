@@ -24,9 +24,9 @@
 
 Built with a "Human First" approach, it requires **no registration, no subscription, and no backend**. It runs entirely in the browser using public APIs.
 
-**HumansTV app v1.0.0 for Android is now available. Check Releases to download it.**
+**HumansTV app v1.0.0 for Android is now available. Download [here](https://github.com/MutmainX/HumansTV/releases/download/v1.0.0/HumansTV_v1.0.0.APK)**
 
-**Website Access it here[https://mutmainx.github.io/HumansTV/]**
+**Website Access it [here](https://mutmainx.github.io/HumansTV/)**
 
 ### Key Features
 
