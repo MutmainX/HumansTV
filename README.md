@@ -20,11 +20,13 @@
 
 ## 🌍 About The Project
 
-**[Still in Beta Version.Try it and give suggestions to improve]**
-
 **Humans TV** is a single-page web application that brings global television to your screen. It aggregates thousands of public live TV streams into a beautiful, modern, and user-friendly interface.
-**Still in Beta Version.Try it and give suggestions to improve**
+
 Built with a "Human First" approach, it requires **no registration, no subscription, and no backend**. It runs entirely in the browser using public APIs.
+
+**HumansTV app v1.0.0 for Android is now available. Check Releases to download it.**
+
+**Website Access it here[https://mutmainx.github.io/HumansTV/]**
 
 ### Key Features
 
@@ -62,7 +64,7 @@ This project is a lightweight, single-file application built with vanilla web te
 
 ## 🚀 Getting Started
 
-## Access it here[https://mutmainx.github.io/HumansTV/]
+Download the Android app or access on website or download index.html file and run it yourself.
 
 Or 
 
